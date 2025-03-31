@@ -61,8 +61,9 @@ const NavLinks = () => {
     const currentPath = usePathname() //requires client page
 
     const links = [
-        {label: 'Dashboard', href: '/'},
-        {label: 'Home', href: '/home'},
+        {label: 'Espressos', href: '/espressos'},
+        {label: 'Beans', href: '/beans'},
+
     ]
     return (
         <ul className="flex space-x-6">
