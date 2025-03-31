@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Espresso {
+  id              Int      @id @default(autoincrement())
+  grindSize       Decimal  @db.Decimal(10, 2)
+  doseGrams       Decimal  @db.Decimal(10, 2)
+  durationSeconds Int
+  extractionGrams Decimal  @db.Decimal(10, 2)
+  stopTimeSeconds Int
+  taste           Taste
+  description     String?  @db.Text
+  date            DateTime
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Foreign key for Bean relationship
+  beanId Int? // Optional field (can be null)
+  bean   Bean? @relation(fields: [beanId], references: [id])
+}
+
+model Bean {
+  id         Int        @id @default(autoincrement())
+  name       String     @db.VarChar(255)
+  roaster    String     @db.VarChar(510)
+  roastLevel RoastLevel
+  // Relation field showing which Espresso entities use this Bean
+  espressos  Espresso[]
+}
+
+enum Taste {
+  SOUR
+  SLIGHT_SOUR
+  GOOD
+  SLIGHT_BITTER
+  BITTER
+}
+
+enum RoastLevel {
+  LIGHT
+  LIGHT_MEDIUM
+  MEDIUM
+  MEDIUM_DARK
+  DARK
+  CHARCOAL
+}
