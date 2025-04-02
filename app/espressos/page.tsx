@@ -2,6 +2,7 @@ import {prisma} from "@/prisma/client";
 import React from 'react'
 import EspressoSummaryCard from "@/app/espressos/EspressoSummaryCard";
 import {Bean, Espresso,} from "@prisma/client";
+import {Flex} from "@radix-ui/themes";
 
 
 export type EspressoWithBean = Espresso & {
@@ -19,13 +20,12 @@ const EspressosPage = async () => {
         }
     })
 
-    // const dto = toEspressoDto(espressos.at(0))
     return (
-        <div>
+        <Flex gap="2" wrap="wrap">
             {espressos.map(espresso =>
                 <EspressoSummaryCard key={espresso.id} espresso={espresso}/>
             )}
-        </div>
+        </Flex>
     )
 }
 export default EspressosPage
