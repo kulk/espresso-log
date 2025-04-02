@@ -9,7 +9,7 @@ const EspressoPage = async () => {
     const bean: Bean[] = await prisma.bean.findMany()
 
     return (
-        <Table.Root>
+        <Table.Root variant='surface'>
             <Table.Header>
                 <Table.Row>
                     <Table.ColumnHeaderCell>Bean</Table.ColumnHeaderCell>
