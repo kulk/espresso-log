@@ -28,8 +28,8 @@ model Espresso {
   updatedAt       DateTime @updatedAt
 
   // Foreign key for Bean relationship
-  beanId Int? // Optional field (can be null)
-  bean   Bean? @relation(fields: [beanId], references: [id])
+  beanId Int
+  bean   Bean @relation(fields: [beanId], references: [id])
 }
 
 model Bean {

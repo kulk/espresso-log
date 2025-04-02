@@ -1,10 +1,16 @@
 import {prisma} from "@/prisma/client";
 import React from 'react'
 import EspressoSummaryCard from "@/app/espressos/EspressoSummaryCard";
+import {Bean, Espresso,} from "@prisma/client";
+
+
+export type EspressoWithBean = Espresso & {
+    bean: Bean;
+};
 
 const EspressosPage = async () => {
 
-    const espressos = await prisma.espresso.findMany({
+    const espressos: EspressoWithBean[] = await prisma.espresso.findMany({
         orderBy: {
             date: "asc"
         },
@@ -12,18 +18,14 @@ const EspressosPage = async () => {
             bean: true
         }
     })
+
+    // const dto = toEspressoDto(espressos.at(0))
     return (
         <div>
-            {/*{espressos.map(espresso =>*/}
-            {/*    <div key={espresso.id}>*/}
-            {/*    <div>{espresso.bean.name}</div>*/}
-            {/*    <div>Test</div>*/}
-            {/*    </div>*/}
-            {/*)}*/}
-            <EspressoSummaryCard/>
+            {espressos.map(espresso =>
+                <EspressoSummaryCard key={espresso.id} espresso={espresso}/>
+            )}
         </div>
     )
 }
 export default EspressosPage
-
-
