@@ -20,7 +20,7 @@ model Espresso {
   durationSeconds Int
   extractionGrams Decimal  @db.Decimal(10, 2)
   stopTimeSeconds Int
-  taste           Taste
+  taste           String   @db.VarChar(255)
   description     String?  @db.Text
   grinder         String?  @db.VarChar(255)
   date            DateTime
@@ -36,24 +36,9 @@ model Bean {
   id         Int        @id @default(autoincrement())
   name       String     @db.VarChar(255)
   roaster    String     @db.VarChar(510)
-  roastLevel RoastLevel
+  roastLevel String     @db.VarChar(255)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
   // Relation field showing which Espresso entities use this Bean
   espressos  Espresso[]
-}
-
-enum Taste {
-  SOUR
-  SLIGHT_SOUR
-  GOOD
-  SLIGHT_BITTER
-  BITTER
-}
-
-enum RoastLevel {
-  LIGHT
-  LIGHT_MEDIUM
-  MEDIUM
-  MEDIUM_DARK
-  DARK
-  CHARCOAL
 }

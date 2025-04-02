@@ -1,9 +1,3 @@
--- CreateEnum
-CREATE TYPE "Taste" AS ENUM ('SOUR', 'SLIGHT_SOUR', 'GOOD', 'SLIGHT_BITTER', 'BITTER');
-
--- CreateEnum
-CREATE TYPE "RoastLevel" AS ENUM ('LIGHT', 'LIGHT_MEDIUM', 'MEDIUM', 'MEDIUM_DARK', 'DARK', 'CHARCOAL');
-
 -- CreateTable
 CREATE TABLE "Espresso" (
     "id" SERIAL NOT NULL,
@@ -12,12 +6,13 @@ CREATE TABLE "Espresso" (
     "durationSeconds" INTEGER NOT NULL,
     "extractionGrams" DECIMAL(10,2) NOT NULL,
     "stopTimeSeconds" INTEGER NOT NULL,
-    "taste" "Taste" NOT NULL,
+    "taste" VARCHAR(255) NOT NULL,
     "description" TEXT,
+    "grinder" VARCHAR(255),
     "date" TIMESTAMP(3) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "beanId" INTEGER,
+    "beanId" INTEGER NOT NULL,
 
     CONSTRAINT "Espresso_pkey" PRIMARY KEY ("id")
 );
@@ -27,10 +22,12 @@ CREATE TABLE "Bean" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "roaster" VARCHAR(510) NOT NULL,
-    "roastLevel" "RoastLevel" NOT NULL,
+    "roastLevel" VARCHAR(255) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Bean_pkey" PRIMARY KEY ("id")
 );
 
 -- AddForeignKey
-ALTER TABLE "Espresso" ADD CONSTRAINT "Espresso_beanId_fkey" FOREIGN KEY ("beanId") REFERENCES "Bean"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Espresso" ADD CONSTRAINT "Espresso_beanId_fkey" FOREIGN KEY ("beanId") REFERENCES "Bean"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
