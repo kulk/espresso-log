@@ -23,7 +23,7 @@ const EspressoPage = async () => {
                     <Table.Row key={bean.id}>
                         <Table.Cell>{bean.name}</Table.Cell>
                         <Table.Cell>{bean.roaster}</Table.Cell>
-                        <Table.Cell>{formatRoastLevel(bean.roastLevel)}</Table.Cell>
+                        <Table.Cell>{bean.roastLevel}</Table.Cell>
                     </Table.Row>
                 )}
             </Table.Body>

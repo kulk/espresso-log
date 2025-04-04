@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import {prisma} from "@/prisma/client";
-import {beanSchema} from "@/validationSchemas";
+import {beanSchema} from "@/app/validationSchemas";
 
 export async function POST(request: NextRequest) {
     const body = await request.json();
@@ -9,6 +9,9 @@ export async function POST(request: NextRequest) {
     if (!validation.success) {
         return NextResponse.json(validation.error.format(), {status: 400})
     }
+
+    console.log("########################")
+    console.log(body)
 
     const newBean = await prisma.bean.create({
         data: {name: body.name, roaster: body.roaster, roastLevel: body.roastLevel},
