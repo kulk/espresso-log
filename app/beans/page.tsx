@@ -1,8 +1,8 @@
 import React from 'react'
 import {prisma} from "@/prisma/client";
 import {Bean} from "@prisma/client";
-import { Table } from '@radix-ui/themes';
-import {formatRoastLevel} from "@/app/utils/formatting";
+import {Table} from '@radix-ui/themes';
+import DeleteBeanIcon from "@/app/beans/DeleteBeanIcon";
 
 const EspressoPage = async () => {
 
@@ -15,6 +15,7 @@ const EspressoPage = async () => {
                     <Table.ColumnHeaderCell>Bean</Table.ColumnHeaderCell>
                     <Table.ColumnHeaderCell>Roaster</Table.ColumnHeaderCell>
                     <Table.ColumnHeaderCell>Roast level</Table.ColumnHeaderCell>
+                    <Table.ColumnHeaderCell></Table.ColumnHeaderCell>
                 </Table.Row>
             </Table.Header>
 
@@ -24,6 +25,9 @@ const EspressoPage = async () => {
                         <Table.Cell>{bean.name}</Table.Cell>
                         <Table.Cell>{bean.roaster}</Table.Cell>
                         <Table.Cell>{bean.roastLevel}</Table.Cell>
+                        <Table.Cell>
+                            <DeleteBeanIcon id={bean.id}/>
+                        </Table.Cell>
                     </Table.Row>
                 )}
             </Table.Body>
