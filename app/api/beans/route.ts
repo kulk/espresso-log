@@ -10,12 +10,17 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(validation.error.format(), {status: 400})
     }
 
-    console.log("########################")
-    console.log(body)
-
     const newBean = await prisma.bean.create({
         data: {name: body.name, roaster: body.roaster, roastLevel: body.roastLevel},
     })
 
     return NextResponse.json(newBean, {status: 201});
 }
+
+export async function GET(
+    request: NextRequest,
+) {
+    const beans = await prisma.bean.findMany()
+
+    return NextResponse.json(beans, {status: 200})
+}//Todo: remove

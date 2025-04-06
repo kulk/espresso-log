@@ -1,8 +1,6 @@
 import React from 'react'
 import {Box, Card, DataList, Flex, Text} from "@radix-ui/themes";
 import {EspressoWithBean} from "@/app/espressos/page";
-import {formatTaste} from "@/app/utils/formatting";
-
 
 interface Props {
     espresso: EspressoWithBean;
@@ -48,7 +46,7 @@ const EspressoSummaryCard = ({espresso}: Props) => {
                             </DataList.Item>
                             <DataList.Item>
                                 <DataList.Label minWidth="88px">Taste</DataList.Label>
-                                <DataList.Value>{formatTaste(espresso.taste)}</DataList.Value>
+                                <DataList.Value>{espresso.taste}</DataList.Value>
                             </DataList.Item>
                             <DataList.Item>
                                 <DataList.Label minWidth="88px">Description</DataList.Label>
