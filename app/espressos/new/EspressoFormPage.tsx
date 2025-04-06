@@ -1,7 +1,7 @@
 'use client'
 
 import React, {useState} from 'react'
-import {Button, Callout, DropdownMenu, TextField} from "@radix-ui/themes";
+import {Button, Callout, DropdownMenu, Flex, TextField} from "@radix-ui/themes";
 import {Controller, useForm} from 'react-hook-form';
 import "easymde/dist/easymde.min.css";
 import axios from 'axios';
@@ -12,6 +12,7 @@ import {z} from 'zod';
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
 import {Bean, Espresso} from "@prisma/client";
+import {getTodayForFieldDate} from "@/app/utils/dateUtils";
 
 type EspressoFormData = z.infer<typeof espressoSchema>;
 //Todo: On backend error, submit button keeps loading
@@ -161,11 +162,17 @@ const EspressoFormPage = ({ espresso, beans }: { espresso?: Espresso; beans: Bea
                 <ErrorMessage>
                     {errors.grinder?.message}
                 </ErrorMessage>
+                <Flex gap="2">
 
                 <TextField.Root defaultValue={espresso?.date.toString()} placeholder="dd-mm-yyyy" {...register('date')}>
                     <TextField.Slot>
                     </TextField.Slot>
                 </TextField.Root>
+                <Button variant="soft"
+                        type="button"
+                        onClick={() => setValue("date", getTodayForFieldDate())}
+                >Today</Button>
+                </Flex>
                 <ErrorMessage>
                     {errors.date?.message}
                 </ErrorMessage>
@@ -208,7 +215,10 @@ const EspressoFormPage = ({ espresso, beans }: { espresso?: Espresso; beans: Bea
                 </div>
 
 
-                <Button disabled={isSubmitting}>
+                <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                >
                     {espresso ? 'Update Espresso' : 'Submit New Espresso'}{' '}
                     {isSubmitting && <Spinner/>}
                 </Button>

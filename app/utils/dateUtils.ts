@@ -11,3 +11,15 @@ export function stringToDateOrNull(input: string): Date | null {
 
     return new Date(year, month, day);
 }
+
+function appendDatePart(datePart: string) {
+    return datePart.length === 1 ? `0${datePart}` : datePart;
+}
+
+export function getTodayForFieldDate() {
+    const today = new Date();
+    const day = appendDatePart(today.getDate().toString())
+    const month = appendDatePart(today.getMonth().toString())
+
+    return `${day}-${month}-${today.getFullYear()}`
+}
