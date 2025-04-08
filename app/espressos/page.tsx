@@ -28,7 +28,11 @@ const EspressosPage = async () => {
             </Button>
             <Flex gap="2" wrap="wrap">
                 {espressos.map(espresso =>
-                    <EspressoSummaryCard key={espresso.id} espresso={espresso}/>
+                    <EspressoSummaryCard
+                        key={espresso.id}
+                        espresso={espresso}
+                        isDetail={true}
+                    />
                 )}
             </Flex>
         </>

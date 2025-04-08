@@ -1,32 +1,41 @@
 import React from 'react'
-import {Box, Card, DataList, Flex, Text} from "@radix-ui/themes";
+import {Box, Card, DataList, Text} from "@radix-ui/themes";
 import {EspressoWithBean} from "@/app/espressos/page";
+import Link from "next/link";
 
 interface Props {
     espresso: EspressoWithBean;
+    isDetail?: boolean;
 }
 
-const EspressoSummaryCard = ({espresso}: Props) => {
+const EspressoSummaryCard = ({espresso, isDetail = false}: Props) => {
+
+    const beanTitle = (
+        <Text size="4" weight="bold">
+            {espresso.bean.name} {espresso.bean.roaster}
+        </Text>
+    );
 
     return (
         <div>
             {espresso &&
                 <Box width="400px">
                     <Card>
-                        <Text size="4" weight="bold">
-                            <Flex
-                                wrap="wrap"
-                                gap="2"
-                            >
-                                <div className="whitespace-nowrap">{espresso.bean.name}</div>
-                                <div className="whitespace-nowrap">{espresso.bean.roaster}</div>
-                            </Flex>
-                        </Text>
-
+                        {isDetail ? (
+                            <Link href={`/espressos/${espresso.id}`}>
+                                {beanTitle}
+                            </Link>
+                        ) : (
+                            <>
+                                {beanTitle}
+                            </>
+                        )}
                         <DataList.Root mt="3">
                             <DataList.Item>
                                 <DataList.Label minWidth="88px">Date</DataList.Label>
-                                <DataList.Value><div>{espresso.date.toDateString()}</div></DataList.Value>
+                                <DataList.Value>
+                                    <div>{espresso.date.toDateString()}</div>
+                                </DataList.Value>
                             </DataList.Item>
                             <DataList.Item>
                                 <DataList.Label minWidth="88px">Grind size</DataList.Label>

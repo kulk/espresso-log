@@ -12,7 +12,6 @@ const DeleteEspressoButton = ({id}: { id: number }) => {
     async function deleteEspresso(id: number) {
         try {
             await axios.delete(`/api/espressos/${id}`)
-
             router.push("/espressos");
             router.refresh();
         } catch (err) {
