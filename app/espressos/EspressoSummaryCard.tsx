@@ -49,6 +49,10 @@ const EspressoSummaryCard = ({espresso}: Props) => {
                                 <DataList.Value>{espresso.taste}</DataList.Value>
                             </DataList.Item>
                             <DataList.Item>
+                                <DataList.Label minWidth="88px">Grinder</DataList.Label>
+                                <DataList.Value>{espresso.grinder}</DataList.Value>
+                            </DataList.Item>
+                            <DataList.Item>
                                 <DataList.Label minWidth="88px">Description</DataList.Label>
                                 <DataList.Value>{espresso.description}</DataList.Value>
                             </DataList.Item>
