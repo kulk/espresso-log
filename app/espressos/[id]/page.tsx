@@ -28,7 +28,7 @@ const EspressoDetailPage = async ({params}: Props) => {
                 {/*<Button mb="3">*/}
                 {/*    <Link href="/espressos/new">Edit</Link>*/}
                 {/*</Button>*/}
-                {/*<DeleteEspressoButton id={parseInt(id)}/>*/}
+                <DeleteEspressoButton id={parseInt(id)}/>
             </Flex>
             <EspressoSummaryCard espresso={espresso}></EspressoSummaryCard>
         </div>

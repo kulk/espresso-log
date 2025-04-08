@@ -1,39 +1,42 @@
 'use client';
 
 import React, {useState} from 'react'
-import {RiDeleteBin6Line} from "react-icons/ri";
-import {AlertDialog, Button } from "@radix-ui/themes";
-import axios from "axios";
 import {useRouter} from "next/navigation";
+import {AlertDialog, Button} from "@radix-ui/themes";
+import axios from "axios";
 
-const DeleteBeanIcon = ({id}: {id: number}) => {
+const DeleteEspressoButton = ({id}: { id: number }) => {
     const router = useRouter(); // don't use router from next/router
     const [error, setError] = useState(false);
 
-    async function deleteBean(id: number) {
+    async function deleteEspresso(id: number) {
         try {
-            await axios.delete(`/api/beans/${id}`)
-            router.push("/beans");
+            await axios.delete(`/api/espressos/${id}`)
+
+            router.push("/espressos");
             router.refresh();
         } catch (err) {
             setError(true);
         }
     }
-    // Todo: Make bean undeleteable when used by espresso
+    //Todo: Create "Are you sure?" dialog
 
     return (
         <>
-            <RiDeleteBin6Line
-                onClick={() => deleteBean(id)}
-            />
+            <Button
+                color="red"
+                onClick={() => deleteEspresso(id)}
+            >
+                Delete
+            </Button>
             <AlertDialog.Root open={error}>
                 <AlertDialog.Content>
                     <AlertDialog.Title>Error</AlertDialog.Title>
-                    <AlertDialog.Description>This Bean could not be deleted.</AlertDialog.Description>
+                    <AlertDialog.Description>This Espresso log could not be deleted.</AlertDialog.Description>
                     <Button mt="2" color="gray" variant="soft" onClick={() => setError(false)}>Ok</Button>
                 </AlertDialog.Content>
             </AlertDialog.Root>
         </>
     )
 }
-export default DeleteBeanIcon
+export default DeleteEspressoButton
