@@ -1,6 +1,6 @@
 import React from 'react'
 import {prisma} from "@/prisma/client";
-import EspressoSummaryCard from "@/app/espressos/EspressoSummaryCard";
+import EspressoSummaryCard from "@/app/espressos/_components/EspressoSummaryCard";
 import {EspressoWithBean} from "@/app/espressos/page";
 import {Button, Flex} from "@radix-ui/themes";
 import Link from "next/link";

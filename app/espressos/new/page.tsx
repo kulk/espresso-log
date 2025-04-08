@@ -1,5 +1,5 @@
 import React from 'react'
-import EspressoFormPage from "@/app/espressos/new/EspressoFormPage";
+import EspressoFormPage from "@/app/espressos/_components/EspressoFormPage";
 import {prisma} from "@/prisma/client";
 
 const NewEspressoPage = async () => {
