@@ -12,7 +12,13 @@ export default auth((req) => {
     const isProtectedRoute = nextUrl.pathname.startsWith("/espressos") ||
         nextUrl.pathname.startsWith("/beans")
 
+    // ✅ Redirect authenticated users from '/' to '/espressos'
+    if (isLoggedIn && nextUrl.pathname === "/") {
+        const redirectUrl = new URL("/espressos", nextUrl.origin);
+        return NextResponse.redirect(redirectUrl);
+    }
 
+    // 🔒 Redirect unauthenticated users to login
     if (!isLoggedIn && isProtectedRoute) {
         // Redirect to login page
         const redirectUrl = new URL("/api/auth/signin", nextUrl.origin);
