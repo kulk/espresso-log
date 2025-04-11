@@ -46,7 +46,7 @@ export async function PATCH(
         where: {id: parseInt(id)}
     });
     if (!espresso) {
-        return NextResponse.json({error: "Invalid issue"}, {status: 400})
+        return NextResponse.json({error: "Invalid espresso log"}, {status: 400})
     }
 
     const updatesEspresso = await prisma.espresso.update({
