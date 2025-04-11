@@ -11,23 +11,24 @@ import {espressoSchema} from "@/app/validationSchemas";
 import {z} from 'zod';
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
-import {Bean, Espresso} from "@prisma/client";
-import {getTodayForFieldDate} from "@/app/utils/dateUtils";
+import {Bean} from "@prisma/client";
+import {dateToFieldString, fieldStringToday} from "@/app/utils/dateUtils";
 
 type EspressoFormData = z.infer<typeof espressoSchema>;
 //Todo: On backend error, submit button keeps loading
 
 const taste = [
-    {value: 'Sour', label: 'Sour'},
-    {value: 'Slightly Sour', label: 'Slightly Sour'},
-    {value: 'Good', label: 'Good'},
-    {value: 'Slightly Bitter', label: 'Slightly Bitter'},
-    {value: 'Bitter', label: 'Bitter'},
-    {value: 'Sour and Bitter', label: 'Sour and Bitter'},
-];//Todo: Don't need label and value!?
+    {name: 'Sour'},
+    {name: 'Slightly Sour'},
+    {name: 'Good'},
+    {name: 'Slightly Bitter'},
+    {name: 'Bitter'},
+    {name: 'Sour and Bitter'},
+];
 
-const EspressoFormPage = ({ espresso, beans }: { espresso?: Espresso; beans: Bean[] }) => {
+const EspressoForm = ({ espressoJson, beans }: { espressoJson?: string; beans: Bean[] }) => {
 
+    const  espresso = espressoJson ? JSON.parse(espressoJson) : null
     const {register, control, handleSubmit, watch, setValue, formState: {errors}} = useForm<EspressoFormData>({
         resolver: zodResolver(espressoSchema)
     });
@@ -53,6 +54,22 @@ const EspressoFormPage = ({ espresso, beans }: { espresso?: Espresso; beans: Bea
     const selectedTaste = watch('taste');
     const selectedBean =  watch('beanId');
 
+    function findBean(selectedBean: number, defaultBean: number): string {
+        return (
+            beans.find(bean => bean.id === selectedBean)?.name ??
+            beans.find(bean => bean.id === defaultBean)?.name ??
+            'Select Bean'
+        );
+    }
+
+    function findTaste(selectedTaste: string, defaultTaste: string): string {
+        return (
+            taste.find(taste => taste.name === selectedTaste)?.name ??
+            defaultTaste ??
+            'Select Bean'
+        );
+    }
+
     return (
         <div className="max-w-xl">
             {error && <Callout.Root color="red" className="mb-5">
@@ -64,7 +81,7 @@ const EspressoFormPage = ({ espresso, beans }: { espresso?: Espresso; beans: Bea
                 className='space-y-3'
                 onSubmit={handleSubmit(onSubmit)}
             >
-                <TextField.Root defaultValue={espresso?.grindSize.toNumber()}
+                <TextField.Root defaultValue={espresso?.grindSize}
                                 placeholder="Grind size" {...register('grindSize', { valueAsNumber: true})}
                 >
                     <TextField.Slot >
@@ -74,7 +91,7 @@ const EspressoFormPage = ({ espresso, beans }: { espresso?: Espresso; beans: Bea
                     {errors.grindSize?.message}
                 </ErrorMessage>
 
-                <TextField.Root defaultValue={espresso?.doseGrams.toNumber()}
+                <TextField.Root defaultValue={espresso?.doseGrams}
                                 placeholder="Dose in grams" {...register('doseGrams', { valueAsNumber: true})}>
                     <TextField.Slot>
                     </TextField.Slot>
@@ -92,7 +109,7 @@ const EspressoFormPage = ({ espresso, beans }: { espresso?: Espresso; beans: Bea
                     {errors.durationSeconds?.message}
                 </ErrorMessage>
 
-                <TextField.Root defaultValue={espresso?.extractionGrams.toNumber()}
+                <TextField.Root defaultValue={espresso?.extractionGrams}
                                 placeholder="Extraction in grams" {...register('extractionGrams', { valueAsNumber: true})}>
                     <TextField.Slot>
                     </TextField.Slot>
@@ -119,23 +136,21 @@ const EspressoFormPage = ({ espresso, beans }: { espresso?: Espresso; beans: Bea
                             <DropdownMenu.Root  {...register('taste')}>
                                 <DropdownMenu.Trigger>
                                     <Button variant="soft">
-                                        {selectedTaste
-                                            ? taste.find(taste => taste.value === selectedTaste)?.label
-                                            : 'Select Taste'}
+                                        {findTaste(selectedTaste, espresso.taste)}
                                         <DropdownMenu.TriggerIcon/>
                                     </Button>
                                 </DropdownMenu.Trigger>
                                 <DropdownMenu.Content>
                                     {taste.map(taste => (
                                         <DropdownMenu.Item
-                                            key={taste.value}
+                                            key={taste.name}
                                             className="px-3 py-2 text-sm outline-none cursor-pointer rounded hover:bg-blue-50 focus:bg-blue-50"
                                             onClick={() => {
-                                                setValue('taste', taste.value);
-                                                field.onChange(taste.value);
+                                                setValue('taste', taste.name);
+                                                field.onChange(taste.name);
                                             }}
                                         >
-                                            {taste.label}
+                                            {taste.name}
                                         </DropdownMenu.Item>
                                     ))}
                                 </DropdownMenu.Content>
@@ -163,14 +178,16 @@ const EspressoFormPage = ({ espresso, beans }: { espresso?: Espresso; beans: Bea
                     {errors.grinder?.message}
                 </ErrorMessage>
                 <Flex gap="2">
-
-                <TextField.Root defaultValue={espresso?.date.toString()} placeholder="dd-mm-yyyy" {...register('date')}>
-                    <TextField.Slot>
-                    </TextField.Slot>
+                <TextField.Root
+                    defaultValue={espresso ? dateToFieldString(espresso.date) : ""}
+                    placeholder="dd-mm-yyyy"
+                    {...register('date')}
+                >
+                    <TextField.Slot/>
                 </TextField.Root>
                 <Button variant="soft"
                         type="button"
-                        onClick={() => setValue("date", getTodayForFieldDate())}
+                        onClick={() => setValue("date", fieldStringToday())}
                 >Today</Button>
                 </Flex>
                 <ErrorMessage>
@@ -187,9 +204,7 @@ const EspressoFormPage = ({ espresso, beans }: { espresso?: Espresso; beans: Bea
                             <DropdownMenu.Root  {...register('taste')}>
                                 <DropdownMenu.Trigger>
                                     <Button variant="soft">
-                                        {selectedBean
-                                            ? beans.find(bean => bean.id === selectedBean)?.name
-                                            : 'Select Bean'}
+                                        {findBean(selectedBean, espresso.beanId)}
                                         <DropdownMenu.TriggerIcon/>
                                     </Button>
                                 </DropdownMenu.Trigger>
@@ -214,7 +229,6 @@ const EspressoFormPage = ({ espresso, beans }: { espresso?: Espresso; beans: Bea
                     </ErrorMessage>
                 </div>
 
-
                 <Button
                     type="submit"
                     disabled={isSubmitting}
@@ -226,4 +240,4 @@ const EspressoFormPage = ({ espresso, beans }: { espresso?: Espresso; beans: Bea
         </div>
     )
 }
-export default EspressoFormPage
+export default EspressoForm

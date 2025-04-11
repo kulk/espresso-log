@@ -1,5 +1,7 @@
 import {NextRequest, NextResponse} from "next/server";
 import {prisma} from "@/prisma/client";
+import {espressoSchema} from "@/app/validationSchemas";
+import {stringToDateOrNull} from "@/app/utils/dateUtils";
 
 export async function DELETE(
     request: NextRequest,
@@ -20,4 +22,47 @@ export async function DELETE(
     })
 
     return NextResponse.json({});
+}
+
+export async function PATCH(
+    request: NextRequest,
+    {params}: { params: Promise<{ id: string }> }
+) {
+
+    const {id} = await params;
+    const body = await request.json();
+    const validation = espressoSchema.safeParse(body);
+    if (!validation.success)
+        return NextResponse.json(validation.error.format(), {status: 400})
+
+    const date = stringToDateOrNull(body.date)
+    if (!date) {
+        return NextResponse.json("Invalid date", {status: 400})
+    }
+
+    const {grindSize, doseGrams, durationSeconds, extractionGrams, stopTimeSeconds, taste, description, grinder, beanId} = body;
+
+    const espresso = await prisma.espresso.findUnique({
+        where: {id: parseInt(id)}
+    });
+    if (!espresso) {
+        return NextResponse.json({error: "Invalid issue"}, {status: 400})
+    }
+
+    const updatesEspresso = await prisma.espresso.update({
+        where: {id: espresso.id},
+        data: {
+            grindSize,
+            doseGrams,
+            durationSeconds,
+            extractionGrams,
+            stopTimeSeconds,
+            taste,
+            description,
+            grinder,
+            date,
+            beanId
+        }
+    })
+    return NextResponse.json(updatesEspresso);
 }

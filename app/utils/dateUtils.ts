@@ -12,14 +12,16 @@ export function stringToDateOrNull(input: string): Date | null {
     return new Date(year, month, day);
 }
 
+export function dateToFieldString(dateOrString: Date | string): string {
+    const date = new Date(dateOrString);
+    const day = appendDatePart(date.getDate().toString())
+    const month = appendDatePart(date.getMonth().toString())
+
+    return `${day}-${month}-${date.getFullYear()}`
+}
+
 function appendDatePart(datePart: string) {
     return datePart.length === 1 ? `0${datePart}` : datePart;
 }
 
-export function getTodayForFieldDate() {
-    const today = new Date();
-    const day = appendDatePart(today.getDate().toString())
-    const month = appendDatePart(today.getMonth().toString())
-
-    return `${day}-${month}-${today.getFullYear()}`
-}
+export const fieldStringToday = () => dateToFieldString(new Date)

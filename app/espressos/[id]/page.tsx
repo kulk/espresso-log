@@ -21,13 +21,14 @@ const EspressoDetailPage = async ({params}: Props) => {
             bean: true,
         },
     }) as EspressoWithBean || null
+    //Todo: Show 404 when Espresso is not found
 
     return (
         <div>
             <Flex gap="3"  mb="3">
-                {/*<Button>*/}
-                {/*    <Link href="/espressos/new">Edit</Link>*/}
-                {/*</Button>*/}
+                <Button>
+                    <Link href={`/espressos/${espresso.id}/edit`}>Edit</Link>
+                </Button>
                 <DeleteEspressoButton id={parseInt(id)}/>
             </Flex>
             <EspressoSummaryCard espresso={espresso}></EspressoSummaryCard>
