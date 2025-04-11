@@ -4,8 +4,9 @@ import React from 'react'
 import Link from "next/link";
 import {usePathname} from "next/navigation";
 import classnames from 'classnames';
-import {Container, Flex} from "@radix-ui/themes";
+import {Box, Container, Flex, Skeleton, Text, Avatar, DropdownMenu} from "@radix-ui/themes";
 import {CiCoffeeBean} from "react-icons/ci";
+import {useSession} from "next-auth/react";
 
 const NavBar = () => {
 
@@ -17,45 +18,45 @@ const NavBar = () => {
                         <Link href="/"><CiCoffeeBean/></Link>
                         <NavLinks/>
                     </Flex>
-                    {/*<AuthStatus/>*/}
+                    <AuthStatus/>
                 </Flex>
             </Container>
         </nav>
     )
 }
-// const AuthStatus = () => {
-//     const {status, data: session} = useSession();
-//
-//     if (status === "loading") return <Skeleton width="3rem"/>;
-//     if (status === "unauthenticated")
-//         return <Link className="nav-link" href="/api/auth/signin">Login</Link>
-//
-//     return(
-//         <Box>
-//             <DropdownMenu.Root>
-//                 <DropdownMenu.Trigger>
-//                     <Avatar
-//                         src={session!.user!.image!}
-//                         fallback="?"
-//                         size="2"
-//                         radius="full"
-//                         className="cursor-pointer"
-//                     />
-//                 </DropdownMenu.Trigger>
-//                 <DropdownMenu.Content>
-//                     <DropdownMenu.Label>
-//                         <Text size="2">
-//                             {session!.user!.email}
-//                         </Text>
-//                     </DropdownMenu.Label>
-//                     <DropdownMenu.Item>
-//                         <Link href="/api/auth/signout">Log out</Link>
-//                     </DropdownMenu.Item>
-//                 </DropdownMenu.Content>
-//             </DropdownMenu.Root>
-//         </Box>
-//     );
-// };
+const AuthStatus = () => {
+    const {status, data: session} = useSession();
+
+    if (status === "loading") return <Skeleton width="3rem"/>;
+    if (status === "unauthenticated")
+        return <Link className="nav-link" href="/api/auth/signin">Login</Link>
+
+    return(
+        <Box>
+            <DropdownMenu.Root>
+                <DropdownMenu.Trigger>
+                    <Avatar
+                        src={session!.user!.image!}
+                        fallback="?"
+                        size="2"
+                        radius="full"
+                        className="cursor-pointer"
+                    />
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Content>
+                    <DropdownMenu.Label>
+                        <Text size="2">
+                            {session!.user!.email}
+                        </Text>
+                    </DropdownMenu.Label>
+                    <DropdownMenu.Item>
+                        <Link href="/api/auth/signout">Log out</Link>
+                    </DropdownMenu.Item>
+                </DropdownMenu.Content>
+            </DropdownMenu.Root>
+        </Box>
+    );
+};
 
 const NavLinks = () => {
     const currentPath = usePathname() //requires client page
