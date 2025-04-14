@@ -2,11 +2,15 @@ import {NextRequest, NextResponse} from "next/server";
 import {prisma} from "@/prisma/client";
 import {espressoSchema} from "@/app/validationSchemas";
 import {stringToDateOrNull} from "@/app/utils/dateUtils";
+import {getServerSession} from "next-auth";
+import authOptions from "@/app/auth/authOptions";
 
 export async function DELETE(
     request: NextRequest,
     {params}: { params: Promise<{ id: string }> }
 ) {
+    const session = await getServerSession(authOptions);
+    if (!session) return NextResponse.json({}, { status: 401 });
 
     const {id} = await params;
     const espresso = await prisma.espresso.findUnique({
@@ -28,6 +32,8 @@ export async function PATCH(
     request: NextRequest,
     {params}: { params: Promise<{ id: string }> }
 ) {
+    const session = await getServerSession(authOptions);
+    if (!session) return NextResponse.json({}, { status: 401 });
 
     const {id} = await params;
     const body = await request.json();
