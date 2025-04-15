@@ -8,21 +8,30 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
 datasource db {
-  provider = "postgresql"
+  provider = "cockroachdb"
   url      = env("DATABASE_URL")
 }
 
+model Widget {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+}
+
 model Espresso {
-  id              Int      @id @default(autoincrement())
+  id              Int      @id @default(sequence())
   grindSize       Decimal  @db.Decimal(10, 2)
   doseGrams       Decimal  @db.Decimal(10, 2)
   durationSeconds Int
   extractionGrams Decimal  @db.Decimal(10, 2)
   stopTimeSeconds Int
-  taste           String   @db.VarChar(255)
-  description     String?  @db.Text
-  grinder         String?  @db.VarChar(255)
+  taste           String   @db.String(255)
+  description     String?  @db.String(65535)
+  grinder         String?  @db.String(255)
   date            DateTime
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
@@ -32,22 +41,22 @@ model Espresso {
   bean   Bean @relation(fields: [beanId], references: [id])
 
   // Foreign key for User relationship
-  assignedToUserId String? @db.VarChar(255)
+  assignedToUserId String? @db.String(255)
   assignedToUser   User?   @relation(fields: [assignedToUserId], references: [id])
 }
 
 model Bean {
-  id         Int        @id @default(autoincrement())
-  name       String     @db.VarChar(255)
-  roaster    String     @db.VarChar(510)
-  roastLevel String     @db.VarChar(255)
+  id         Int        @id @default(sequence())
+  name       String     @db.String(255)
+  roaster    String     @db.String(510)
+  roastLevel String     @db.String(255)
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   // Relation field showing which Espresso entities use this Bean
   espressos  Espresso[]
 
   // Foreign key for User relationship
-  assignedToUserId String? @db.VarChar(255)
+  assignedToUserId String? @db.String(255)
   assignedToUser   User?   @relation(fields: [assignedToUserId], references: [id])
 }
 
