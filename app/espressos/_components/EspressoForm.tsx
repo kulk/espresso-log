@@ -136,7 +136,7 @@ const EspressoForm = ({ espressoJson, beans }: { espressoJson?: string; beans: B
                             <DropdownMenu.Root  {...register('taste')}>
                                 <DropdownMenu.Trigger>
                                     <Button variant="soft">
-                                        {findTaste(selectedTaste, espresso.taste)}
+                                        {findTaste(selectedTaste, espresso?.taste)}
                                         <DropdownMenu.TriggerIcon/>
                                     </Button>
                                 </DropdownMenu.Trigger>
@@ -204,7 +204,7 @@ const EspressoForm = ({ espressoJson, beans }: { espressoJson?: string; beans: B
                             <DropdownMenu.Root  {...register('taste')}>
                                 <DropdownMenu.Trigger>
                                     <Button variant="soft">
-                                        {findBean(selectedBean, espresso.beanId)}
+                                        {findBean(selectedBean, espresso?.beanId)}
                                         <DropdownMenu.TriggerIcon/>
                                     </Button>
                                 </DropdownMenu.Trigger>
