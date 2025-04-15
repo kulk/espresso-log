@@ -4,6 +4,7 @@ import EspressoSummaryCard from "@/app/espressos/_components/EspressoSummaryCard
 import {Bean, Espresso,} from "@prisma/client";
 import {Button, Flex} from "@radix-ui/themes";
 import Link from "next/link";
+import NoAuthRedirect from "@/app/components/NoAuthRedirect";
 
 
 export type EspressoWithBean = Espresso & {
@@ -22,7 +23,7 @@ const EspressosPage = async () => {
     })
 
     return (
-        <>
+        <NoAuthRedirect>
             <Button mb="3">
                 <Link href="/espressos/new">New Espresso</Link>
             </Button>
@@ -35,7 +36,7 @@ const EspressosPage = async () => {
                     />
                 )}
             </Flex>
-        </>
+        </NoAuthRedirect>
     )
 }
 export default EspressosPage
