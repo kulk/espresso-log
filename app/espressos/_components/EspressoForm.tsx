@@ -66,7 +66,7 @@ const EspressoForm = ({ espressoJson, beans }: { espressoJson?: string; beans: B
         return (
             taste.find(taste => taste.name === selectedTaste)?.name ??
             defaultTaste ??
-            'Select Bean'
+            'Select Taste'
         );
     }
 

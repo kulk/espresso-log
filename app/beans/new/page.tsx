@@ -1,13 +1,12 @@
 import React from 'react'
 import BeanFormPage from "@/app/beans/new/BeanFormPage";
-import NoAuthRedirect from "@/app/components/NoAuthRedirect";
+import {getAuthenticatedUser} from "@/app/auth/auth-utils";
 
-const NewBeanPage = () => {
+const NewBeanPage = async () => {
 
-    return (
-        <NoAuthRedirect>
-            <BeanFormPage/>
-        </NoAuthRedirect>
-    )
+    await getAuthenticatedUser();
+
+    return <BeanFormPage/>
+
 }
 export default NewBeanPage

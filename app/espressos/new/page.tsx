@@ -1,15 +1,14 @@
 import React from 'react'
 import EspressoForm from "@/app/espressos/_components/EspressoForm";
 import {prisma} from "@/prisma/client";
-import NoAuthRedirect from "@/app/components/NoAuthRedirect";
+import {getAuthenticatedUser} from "@/app/auth/auth-utils";
 
 const NewEspressoPage = async () => {
-    const beans = await prisma.bean.findMany()
-
-    return (
-        <NoAuthRedirect>
-            <EspressoForm beans={beans}/>
-        </NoAuthRedirect>
+    const user = await getAuthenticatedUser();
+    const beans = await prisma.bean.findMany(
+        {where: {assignedToUserId: user.id}}
     )
+
+    return <EspressoForm beans={beans}/>
 }
 export default NewEspressoPage

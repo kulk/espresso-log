@@ -4,14 +4,17 @@ import {Bean} from "@prisma/client";
 import {Button, Table} from '@radix-ui/themes';
 import DeleteBeanIcon from "@/app/beans/DeleteBeanIcon";
 import Link from "next/link";
-import NoAuthRedirect from "@/app/components/NoAuthRedirect";
+import {getAuthenticatedUser} from "@/app/auth/auth-utils";
 
-const EspressoPage = async () => {
+const BeanPage = async () => {
 
-    const bean: Bean[] = await prisma.bean.findMany()
+    const user = await getAuthenticatedUser();
+    const bean: Bean[] = await prisma.bean.findMany(
+        {where: {assignedToUserId: user.id}}
+    )
 
     return (
-        <NoAuthRedirect>
+        <>
             <Button mb="3">
                 <Link href="/beans/new">New Bean</Link>
             </Button>
@@ -38,7 +41,7 @@ const EspressoPage = async () => {
                     )}
                 </Table.Body>
             </Table.Root>
-        </NoAuthRedirect>
+        </>
     )
 }
-export default EspressoPage
+export default BeanPage
