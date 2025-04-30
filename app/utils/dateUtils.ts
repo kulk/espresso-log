@@ -15,7 +15,7 @@ export function stringToDateOrNull(input: string): Date | null {
 export function dateToFieldString(dateOrString: Date | string): string {
     const date = new Date(dateOrString);
     const day = appendDatePart(date.getDate().toString())
-    const month = appendDatePart(date.getMonth().toString())
+    const month = appendDatePart((date.getMonth() + 1).toString()) // Month is 0-based
 
     return `${day}-${month}-${date.getFullYear()}`
 }
