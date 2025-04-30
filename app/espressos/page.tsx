@@ -18,7 +18,7 @@ const EspressosPage = async () => {
     const espressos: EspressoWithBean[] = await prisma.espresso.findMany({
         where: {assignedToUserId: user.id},
         orderBy: {
-            date: "asc"
+            date: "desc"
         },
         include: {
             bean: true
