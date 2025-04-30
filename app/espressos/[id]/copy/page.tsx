@@ -7,7 +7,7 @@ interface Props {
     params: Promise<{ id: string }>
 }
 
-const EditEspressoPage = async ({params}: Props) => {
+const CopyEspressoPage = async ({params}: Props) => {
     const {id} = await params
     const beans = await prisma.bean.findMany()
     const espresso = await prisma.espresso.findUnique({
@@ -20,7 +20,8 @@ const EditEspressoPage = async ({params}: Props) => {
     const espressoJson = JSON.stringify(espresso)
 
     return (
-        <EspressoForm beans={beans} espressoJson={espressoJson} isCopy={false} />
+        <EspressoForm beans={beans} espressoJson={espressoJson} isCopy={true} />
     )
 }
-export default EditEspressoPage
+export default CopyEspressoPage
+//Todo: Refactor to avoid duplicate

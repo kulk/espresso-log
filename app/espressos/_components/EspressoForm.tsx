@@ -26,7 +26,7 @@ const taste = [
     {name: 'Sour and Bitter'},
 ];
 
-const EspressoForm = ({ espressoJson, beans }: { espressoJson?: string; beans: Bean[] }) => {
+const EspressoForm = ({ espressoJson, beans, isCopy }: { espressoJson?: string; beans: Bean[]; isCopy: boolean }) => {
 
     const  espresso = espressoJson ? JSON.parse(espressoJson) : null
     const {register, control, handleSubmit, watch, setValue, formState: {errors}} = useForm<EspressoFormData>({
@@ -39,7 +39,7 @@ const EspressoForm = ({ espressoJson, beans }: { espressoJson?: string; beans: B
     const onSubmit = async (data: EspressoFormData) => {
         try {
             setSubmit(true)
-            if (espresso) {
+            if (espresso && !isCopy) {
                 await axios.patch('/api/espressos/' + espresso.id, data);
             } else {
                 await axios.post("/api/espressos", data);

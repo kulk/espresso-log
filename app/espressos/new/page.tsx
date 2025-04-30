@@ -9,6 +9,6 @@ const NewEspressoPage = async () => {
         {where: {assignedToUserId: user.id}}
     )
 
-    return <EspressoForm beans={beans}/>
+    return <EspressoForm beans={beans} isCopy={false}/>
 }
 export default NewEspressoPage
