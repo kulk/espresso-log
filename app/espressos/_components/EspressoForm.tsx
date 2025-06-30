@@ -233,7 +233,7 @@ const EspressoForm = ({ espressoJson, beans, isCopy }: { espressoJson?: string; 
                     type="submit"
                     disabled={isSubmitting}
                 >
-                    {espresso ? 'Update Espresso' : 'Submit New Espresso'}{' '}
+                    {buttonText(espresso != null, isCopy)}{' '}
                     {isSubmitting && <Spinner/>}
                 </Button>
             </form>
@@ -241,3 +241,8 @@ const EspressoForm = ({ espressoJson, beans, isCopy }: { espressoJson?: string; 
     )
 }
 export default EspressoForm
+
+function buttonText(espresso: boolean, isCopy: boolean): string {
+    if (!espresso) return 'Submit New Espresso';
+    return isCopy ? 'Copy Espresso' : 'Update Espresso';
+}
