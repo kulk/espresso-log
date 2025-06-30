@@ -12,7 +12,7 @@ const EspressoSummaryCard = ({espresso, isDetail = false}: Props) => {
 
     const beanTitle = (
         <Text size="4" weight="bold">
-            {espresso.bean.name} {espresso.bean.roaster}
+           {espresso.bean.roaster} - {espresso.bean.name}
         </Text>
     );
 

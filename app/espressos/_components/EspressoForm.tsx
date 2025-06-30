@@ -55,11 +55,8 @@ const EspressoForm = ({ espressoJson, beans, isCopy }: { espressoJson?: string; 
     const selectedBean =  watch('beanId');
 
     function findBean(selectedBean: number, defaultBean: number): string {
-        return (
-            beans.find(bean => bean.id === selectedBean)?.name ??
-            beans.find(bean => bean.id === defaultBean)?.name ??
-            'Select Bean'
-        );
+        const bean = beans.find(b => b.id === selectedBean) ?? beans.find(b => b.id === defaultBean);
+        return bean ? `${bean.roaster} - ${bean.name}` : 'Select Bean';
     }
 
     function findTaste(selectedTaste: string, defaultTaste: string): string {
@@ -218,7 +215,7 @@ const EspressoForm = ({ espressoJson, beans, isCopy }: { espressoJson?: string; 
                                                 field.onChange(bean.id);
                                             }}
                                         >
-                                            {bean.name}
+                                            {bean.roaster} - {bean.name}
                                         </DropdownMenu.Item>
                                     ))}
                                 </DropdownMenu.Content>
