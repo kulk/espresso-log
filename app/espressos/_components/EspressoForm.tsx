@@ -1,7 +1,7 @@
 'use client'
 
 import React, {useState} from 'react'
-import {Button, Callout, DropdownMenu, Flex, TextField} from "@radix-ui/themes";
+import {Button, Callout, DropdownMenu, Flex, TextField, Text} from "@radix-ui/themes";
 import {Controller, useForm} from 'react-hook-form';
 import "easymde/dist/easymde.min.css";
 import axios from 'axios';
@@ -78,6 +78,9 @@ const EspressoForm = ({ espressoJson, beans, isCopy }: { espressoJson?: string; 
                 className='space-y-3'
                 onSubmit={handleSubmit(onSubmit)}
             >
+                <Text as="label" size="2" weight="regular">
+                    Grind size
+                </Text>
                 <TextField.Root defaultValue={espresso?.grindSize}
                                 placeholder="Grind size" {...register('grindSize', { valueAsNumber: true})}
                 >
@@ -88,6 +91,9 @@ const EspressoForm = ({ espressoJson, beans, isCopy }: { espressoJson?: string; 
                     {errors.grindSize?.message}
                 </ErrorMessage>
 
+                <Text as="label" size="2" weight="regular">
+                    Dose - grams
+                </Text>
                 <TextField.Root defaultValue={espresso?.doseGrams}
                                 placeholder="Dose in grams" {...register('doseGrams', { valueAsNumber: true})}>
                     <TextField.Slot>
@@ -97,6 +103,9 @@ const EspressoForm = ({ espressoJson, beans, isCopy }: { espressoJson?: string; 
                     {errors.doseGrams?.message}
                 </ErrorMessage>
 
+                <Text as="label" size="2" weight="regular">
+                    Duration - seconds
+                </Text>
                 <TextField.Root defaultValue={espresso?.durationSeconds}
                                 placeholder="Duration seconds" {...register('durationSeconds', { valueAsNumber: true})}>
                     <TextField.Slot>
@@ -106,6 +115,9 @@ const EspressoForm = ({ espressoJson, beans, isCopy }: { espressoJson?: string; 
                     {errors.durationSeconds?.message}
                 </ErrorMessage>
 
+                <Text as="label" size="2" weight="regular">
+                    Extraction - grams
+                </Text>
                 <TextField.Root defaultValue={espresso?.extractionGrams}
                                 placeholder="Extraction in grams" {...register('extractionGrams', { valueAsNumber: true})}>
                     <TextField.Slot>
@@ -115,6 +127,9 @@ const EspressoForm = ({ espressoJson, beans, isCopy }: { espressoJson?: string; 
                     {errors.extractionGrams?.message}
                 </ErrorMessage>
 
+                <Text as="label" size="2" weight="regular">
+                    Stop time - seconds
+                </Text>
                 <TextField.Root defaultValue={espresso?.stopTimeSeconds}
                                 placeholder="Stop time seconds" {...register('stopTimeSeconds', { valueAsNumber: true})}>
                     <TextField.Slot>
@@ -124,6 +139,9 @@ const EspressoForm = ({ espressoJson, beans, isCopy }: { espressoJson?: string; 
                     {errors.stopTimeSeconds?.message}
                 </ErrorMessage>
 
+                <Text as="label" size="2" weight="regular">
+                    Taste
+                </Text>
                 <div className="mb-3">
                     <Controller
                         name="taste"
@@ -158,6 +176,9 @@ const EspressoForm = ({ espressoJson, beans, isCopy }: { espressoJson?: string; 
                     </ErrorMessage>
                 </div>
 
+                <Text as="label" size="2" weight="regular">
+                    Description
+                </Text>
                 <TextField.Root defaultValue={espresso?.description || ""}
                                 placeholder="Description" {...register('description')}>
                     <TextField.Slot>
@@ -167,6 +188,9 @@ const EspressoForm = ({ espressoJson, beans, isCopy }: { espressoJson?: string; 
                     {errors.description?.message}
                 </ErrorMessage>
 
+                <Text as="label" size="2" weight="regular">
+                    Grinder
+                </Text>
                 <TextField.Root defaultValue={espresso?.grinder || ""} placeholder="Grinder" {...register('grinder')}>
                     <TextField.Slot>
                     </TextField.Slot>
@@ -174,24 +198,30 @@ const EspressoForm = ({ espressoJson, beans, isCopy }: { espressoJson?: string; 
                 <ErrorMessage>
                     {errors.grinder?.message}
                 </ErrorMessage>
+
+                <Text as="label" size="2" weight="regular">
+                    Date
+                </Text>
                 <Flex gap="2">
-                <TextField.Root
-                    defaultValue={espresso ? dateToFieldString(espresso.date) : ""}
-                    placeholder="dd-mm-yyyy"
-                    {...register('date')}
-                >
-                    <TextField.Slot/>
-                </TextField.Root>
-                <Button variant="soft"
-                        type="button"
-                        onClick={() => setValue("date", fieldStringToday())}
-                >Today</Button>
+                    <TextField.Root
+                        defaultValue={espresso ? dateToFieldString(espresso.date) : ""}
+                        placeholder="dd-mm-yyyy"
+                        {...register('date')}
+                    >
+                        <TextField.Slot/>
+                    </TextField.Root>
+                    <Button variant="soft"
+                            type="button"
+                            onClick={() => setValue("date", fieldStringToday())}
+                    >Today</Button>
                 </Flex>
                 <ErrorMessage>
                     {errors.date?.message}
                 </ErrorMessage>
 
-
+                <Text as="label" size="2" weight="regular">
+                    Beans
+                </Text>
                 <div className="mb-3">
                     <Controller
                         name="beanId"
