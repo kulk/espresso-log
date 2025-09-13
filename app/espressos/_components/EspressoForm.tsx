@@ -104,6 +104,18 @@ const EspressoForm = ({ espressoJson, beans, isCopy }: { espressoJson?: string; 
                 </ErrorMessage>
 
                 <Text as="label" size="2" weight="regular">
+                    Stop time - grams
+                </Text>
+                <TextField.Root defaultValue={espresso?.stopTimeSeconds}
+                                placeholder="Stop time seconds" {...register('stopTimeSeconds', { valueAsNumber: true})}>
+                    <TextField.Slot>
+                    </TextField.Slot>
+                </TextField.Root>
+                <ErrorMessage>
+                    {errors.stopTimeSeconds?.message}
+                </ErrorMessage>
+
+                <Text as="label" size="2" weight="regular">
                     Duration - seconds
                 </Text>
                 <TextField.Root defaultValue={espresso?.durationSeconds}
@@ -125,18 +137,6 @@ const EspressoForm = ({ espressoJson, beans, isCopy }: { espressoJson?: string; 
                 </TextField.Root>
                 <ErrorMessage>
                     {errors.extractionGrams?.message}
-                </ErrorMessage>
-
-                <Text as="label" size="2" weight="regular">
-                    Stop time - seconds
-                </Text>
-                <TextField.Root defaultValue={espresso?.stopTimeSeconds}
-                                placeholder="Stop time seconds" {...register('stopTimeSeconds', { valueAsNumber: true})}>
-                    <TextField.Slot>
-                    </TextField.Slot>
-                </TextField.Root>
-                <ErrorMessage>
-                    {errors.stopTimeSeconds?.message}
                 </ErrorMessage>
 
                 <Text as="label" size="2" weight="regular">
