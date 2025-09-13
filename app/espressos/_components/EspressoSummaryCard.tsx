@@ -19,7 +19,7 @@ const EspressoSummaryCard = ({espresso, isDetail = false}: Props) => {
     return (
         <div>
             {espresso &&
-                <Box width="400px">
+                <Box width="340px">
                     <Card>
                         {isDetail ? (
                             <Link href={`/espressos/${espresso.id}`}>
