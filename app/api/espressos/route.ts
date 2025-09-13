@@ -42,6 +42,8 @@ export async function POST(request: NextRequest) {
             description: body.description,
             grinder: body.grinder,
             date: date,
+            basket: body.basket,
+            temperature: body.temperature,
             beanId: body.beanId,
             assignedToUserId: user.id
         },

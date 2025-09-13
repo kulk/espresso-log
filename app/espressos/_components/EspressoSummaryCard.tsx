@@ -46,12 +46,24 @@ const EspressoSummaryCard = ({espresso, isDetail = false}: Props) => {
                                 <DataList.Value>{espresso.doseGrams.toNumber()} gr</DataList.Value>
                             </DataList.Item>
                             <DataList.Item>
-                                <DataList.Label minWidth="88px">Out</DataList.Label>
-                                <DataList.Value>{espresso.extractionGrams.toNumber()} gr</DataList.Value>
+                                <DataList.Label minWidth="88px">Stopped at</DataList.Label>
+                                <DataList.Value>{espresso.stopTimeSeconds} gr</DataList.Value>
                             </DataList.Item>
                             <DataList.Item>
                                 <DataList.Label minWidth="88px">Time</DataList.Label>
                                 <DataList.Value>{espresso.durationSeconds} s</DataList.Value>
+                            </DataList.Item>
+                            <DataList.Item>
+                                <DataList.Label minWidth="88px">Out</DataList.Label>
+                                <DataList.Value>{espresso.extractionGrams.toNumber()} gr</DataList.Value>
+                            </DataList.Item>
+                            <DataList.Item>
+                                <DataList.Label minWidth="88px">Basket</DataList.Label>
+                                <DataList.Value>{espresso.basket}</DataList.Value>
+                            </DataList.Item>
+                            <DataList.Item>
+                                <DataList.Label minWidth="88px">Temperature</DataList.Label>
+                                <DataList.Value>{espresso.temperature}</DataList.Value>
                             </DataList.Item>
                             <DataList.Item>
                                 <DataList.Label minWidth="88px">Taste</DataList.Label>

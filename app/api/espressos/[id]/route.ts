@@ -46,7 +46,7 @@ export async function PATCH(
         return NextResponse.json("Invalid date", {status: 400})
     }
 
-    const {grindSize, doseGrams, durationSeconds, extractionGrams, stopTimeSeconds, taste, description, grinder, beanId} = body;
+    const {grindSize, doseGrams, durationSeconds, extractionGrams, stopTimeSeconds, basket, temperature, taste, description, grinder, beanId} = body;
 
     const espresso = await prisma.espresso.findUnique({
         where: {id: parseInt(id)}
@@ -54,7 +54,6 @@ export async function PATCH(
     if (!espresso) {
         return NextResponse.json({error: "Invalid espresso log"}, {status: 400})
     }
-
     const updatesEspresso = await prisma.espresso.update({
         where: {id: espresso.id},
         data: {
@@ -67,6 +66,8 @@ export async function PATCH(
             description,
             grinder,
             date,
+            basket,
+            temperature,
             beanId
         }
     })

@@ -13,6 +13,8 @@ export const espressoSchema = z.object({
     extractionGrams: z.number().min(0.1),
     stopTimeSeconds: z.number().min(0),
     taste: z.string().min(1, 'Name is required').max(255),
+    basket: z.string().min(1).max(255).optional(),
+    temperature: z.number().min(0).optional(),
     description: z.string().max(65535).optional(),
     grinder: z.string().min(1).max(255).optional(),
     date: z.string()

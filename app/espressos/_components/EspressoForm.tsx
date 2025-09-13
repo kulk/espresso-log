@@ -140,6 +140,30 @@ const EspressoForm = ({ espressoJson, beans, isCopy }: { espressoJson?: string; 
                 </ErrorMessage>
 
                 <Text as="label" size="2" weight="regular">
+                    Basket
+                </Text>
+                <TextField.Root defaultValue={espresso?.basket}
+                                placeholder="Temperature" {...register('basket')}>
+                    <TextField.Slot>
+                    </TextField.Slot>
+                </TextField.Root>
+                <ErrorMessage>
+                    {errors.basket?.message}
+                </ErrorMessage>
+
+                <Text as="label" size="2" weight="regular">
+                    Temperature
+                </Text>
+                <TextField.Root defaultValue={espresso?.temperature}
+                                placeholder="Temperature" {...register('temperature', { valueAsNumber: true})}>
+                    <TextField.Slot>
+                    </TextField.Slot>
+                </TextField.Root>
+                <ErrorMessage>
+                    {errors.temperature?.message}
+                </ErrorMessage>
+
+                <Text as="label" size="2" weight="regular">
                     Taste
                 </Text>
                 <div className="mb-3">
