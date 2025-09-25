@@ -104,10 +104,10 @@ const EspressoForm = ({ espressoJson, beans, isCopy }: { espressoJson?: string; 
                 </ErrorMessage>
 
                 <Text as="label" size="2" weight="regular">
-                    Stop time - grams
+                    Stopped at - grams
                 </Text>
                 <TextField.Root defaultValue={espresso?.stopTimeSeconds}
-                                placeholder="Stop time seconds" {...register('stopTimeSeconds', { valueAsNumber: true})}>
+                                placeholder="Stopped at" {...register('stopTimeSeconds', { valueAsNumber: true})}>
                     <TextField.Slot>
                     </TextField.Slot>
                 </TextField.Root>
